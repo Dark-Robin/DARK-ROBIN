@@ -22,7 +22,7 @@ async (robin, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, se
 
         // Make an API call to Gemini or OpenAI
         const aiResponse = await openai.createChatCompletion({
-            model: "gpt-3.5-turbo", // Adjust this for Gemini or other AI
+            model: "text-davinci-003", // Adjust this for Gemini or other AI
             messages: [
                 { role: "system", content: "You are a helpful chatbot named ROBIN_AI." },
                 { role: "user", content: q }
