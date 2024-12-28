@@ -1,9 +1,9 @@
 const { cmd, commands } = require('../command');
 const { Configuration, OpenAIApi } = require("openai");
+require("dotenv").config();
 
-// Initialize Gemini or OpenAI (Replace with Gemini's equivalent if using their API)
 const configuration = new Configuration({
-    apiKey: "AIzaSyCzu3TQgsHpKp_FlhuwCJTxy_TkiP_rAQI",
+    apiKey: process.env.OPENAI_API_KEY, // Use environment variable
 });
 const openai = new OpenAIApi(configuration);
 
@@ -16,26 +16,24 @@ cmd({
 },
 async (robin, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, pushname, reply }) => {
     try {
-        if (!q) return reply("*Please type something for the AI to respond!* 🌚❤️");
+        if (!q.trim()) return reply("*Please type something for the AI to respond!* 🌚❤️");
+        if (q.length > 1000) return reply("*Your query is too long. Please shorten it!* 🌚❤️");
 
         reply("*Thinking...* 🤔");
 
-        // Make an API call to Gemini or OpenAI
         const aiResponse = await openai.createChatCompletion({
-            model: "text-davinci-003", // Adjust this for Gemini or other AI
+            model: "gpt-3.5-turbo", // Optimized for chat
             messages: [
                 { role: "system", content: "You are a helpful chatbot named ROBIN_AI." },
                 { role: "user", content: q }
             ],
         });
 
-        const responseText = aiResponse.data.choices[0].message.content;
-
-        // Reply with the AI's response
+        const responseText = aiResponse.data.choices[0]?.message?.content || "I'm sorry, I couldn't process your request.";
         reply(`*❤️ ROBIN AI ❤️*\n\n${responseText}`);
-
     } catch (e) {
-        console.error(e);
-        reply(`*Error:* ${e.message || e}`);
+        console.error("Error in AI Command:", e);
+        reply(`*Error:* ${e.response?.data?.error?.message || e.message || e}`);
     }
 });
+
