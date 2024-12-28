@@ -23,7 +23,7 @@ function convertToBool(text, fault = 'true') {
     return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "Remove this and add your session ID here",
-MONGODB: process.env.MONGODB || "Remove this and add your MongoDB public URL here",
+SESSION_ID: process.env.SESSION_ID || "KJFm1YTR#jZD7sQYQ8SzZZdJKOjlbyNBew1Xf_7o4t8sMyY1NeDc",
+MONGODB: process.env.MONGODB || "mongodb://mongo:wUgAuMxTmGvnyihBBnKiTvNIOiUiYSSU@autorack.proxy.rlwy.net:54588",
 OWNER_NUM: process.env.OWNER_NUM || "94704101989", // Remove this number and add your number with country code
 };
